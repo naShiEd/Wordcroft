@@ -1,0 +1,28 @@
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-logo {
+  height: 56px;
+  width: auto;
+  animation: loaderPulse 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  filter: drop-shadow(0 0 20px rgba(0, 200, 120, 0.15));
+}
+
+@keyframes loaderPulse {
+  0% { transform: scale(0.95); opacity: 0.4; filter: brightness(0.8) drop-shadow(0 0 20px rgba(0, 200, 120, 0.1)); }
+  100% { transform: scale(1.05); opacity: 1; filter: brightness(1.2) drop-shadow(0 0 30px rgba(0, 200, 120, 0.4)); }
+}
