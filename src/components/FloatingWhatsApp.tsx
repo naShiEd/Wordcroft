@@ -1,7 +1,7 @@
 import './FloatingWhatsApp.css';
 
 export default function FloatingWhatsApp() {
-  const whatsappNumber = "263777000000"; // Format: Country code without '+' followed by number
+  const whatsappNumber = "263771263576"; // Format: Country code without '+' followed by number
   const message = "Hello Wordcroft Investments, I would like to inquire about your logistics services.";
   
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;

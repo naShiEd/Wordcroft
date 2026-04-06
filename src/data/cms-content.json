@@ -1,0 +1,107 @@
+{
+  "global": {
+    "companyName": "Wordcroft Investments",
+    "logo": "/logo.png",
+    "contact": {
+      "email": "info@wordcroft.com",
+      "phone": "+263 77 123 4567",
+      "address": "123 Harare Road, Zimbabwe",
+      "whatsapp": "+263771234567"
+    },
+    "social": {
+      "facebook": "#",
+      "linkedin": "#",
+      "twitter": "#"
+    },
+    "footer": {
+      "text": "© 2026 Wordcroft Investments. All rights reserved.",
+      "tagline": "Moving essential resources reliably and securely across Southern Africa."
+    },
+    "seo": {
+      "defaultTitle": "Wordcroft Investments | Regional Logistics & Energy Distribution",
+      "defaultDesc": "Your partner in transport and logistics across Zimbabwe and Southern Africa. Moving fuel, dry goods, and general cargo with reliability."
+    }
+  },
+  "pages": {
+    "home": {
+      "hero": {
+        "title": "Your partner in\ntransport and logistics.",
+        "subtitle": "Moving fuel and dry goods.",
+        "primaryBtn": "Let us partner together →",
+        "secondaryBtn": "Our scale"
+      },
+      "scaleSection": {
+        "badge": "Our Scale",
+        "title": "Built for regional cargo and energy distribution"
+      },
+      "partners": {
+        "badge": "Our Partners",
+        "title": "Trusted by 15+ major companies in the industry",
+        "testimonial": "\"Wordcroft has consistently delivered high-standard logistics solutions for our regional operations. Their reliability and discipline make them a preferred partner in Southern Africa.\"",
+        "author": "— Lead Operations, Major Energy Partner"
+      },
+      "sectors": {
+        "badge": "Core Sectors",
+        "title": "Our Core Services"
+      },
+      "cta": {
+        "title": "Your reliable partner in\ntransport and logistics.",
+        "desc": "Wordcroft Investments continues to build a logistics network designed for scale, reliability, and long-term impact across Africa."
+      }
+    },
+    "sustainability": {
+      "hero": {
+        "tag": "Purpose & Environment",
+        "title": "Sustainability",
+        "desc": "We believe that moving essential resources reliably and securely is critical to the sustainability of the region's industrial backbone."
+      },
+      "impact": {
+        "title": "Delivering impact across the regional logistics network",
+        "desc": "Wordcroft Investments focuses on sectors that power economies. From fuel supply chains to industrial logistics, our work enables businesses, communities, and entire regions to function effectively.",
+        "badge": "Why Our Work Matters",
+        "quote": "\"Reliability in logistics is not optional—it is essential. We strengthen regional networks to power the future of Zimbabwe and its neighbors.\"",
+        "stats": [
+          { "label": "Years Experience", "val": "20+" },
+          { "label": "Compliance focus", "val": "100%" }
+        ],
+        "values": [
+          { "label": "Honesty", "val": "Transparent operations" },
+          { "label": "Integrity", "val": "Principled delivery" }
+        ]
+      },
+      "csr": {
+        "badge": "Impact",
+        "title": "CSR Initiatives",
+        "items": [
+          { "title": "Regional Connectivity", "desc": "Strengthening supply chain networks across borders to lower costs for essential goods." },
+          { "title": "Economic Growth", "desc": "Providing infrastructure that enables businesses to function effectively in Southern Africa." },
+          { "title": "Safety and Standards", "desc": "Implementing rigorous safety inspections and monitoring to protect our people and environments." }
+        ]
+      }
+    }
+  },
+  "collections": {
+    "services": [
+      { "id": "1", "title": "Fuel Transportation", "desc": "We transport diesel, petrol and ethanol in Zimbabwe and southern African countries.", "img": "/assets/services/oil-and-gas-logistics.png" },
+      { "id": "2", "title": "Dry Goods & General Cargo", "desc": "Flexible logistics solutions for a wide range of goods and materials.", "img": "/assets/services/dry good.png" }
+    ],
+    "team": [
+       { "id": "12", "name": "Takunda Basera", "role": "Operation manager", "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Takunda+Basera" },
+       { "id": "9", "name": "Christal Mandeya", "role": "Logistics Manager", "avatar": "/assets/team/1 (9).png" },
+       { "id": "6", "name": "Nomsa Dhlamini", "role": "Accountant", "avatar": "/assets/team/1 (6).png" },
+       { "id": "13", "name": "Petronella Masvingwe", "role": "HR Manager", "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Petronella+Masvingwe" },
+       { "id": "1", "name": "Lewis Machichi", "role": "SHEQ Officer", "avatar": "/assets/team/1 (1).png" },
+       { "id": "2", "name": "Calvin Munodawafa", "role": "Logistics Officer", "avatar": "/assets/team/1 (2).png" },
+       { "id": "3", "name": "Philip Gwazaza", "role": "Accounts Assistant", "avatar": "/assets/team/1 (3).png" },
+       { "id": "4", "name": "Gracious Mukuze", "role": "Accounts Clerk", "avatar": "/assets/team/1 (4).png" },
+       { "id": "5", "name": "Tanaka Muchazoreka", "role": "Team Member", "avatar": "/assets/team/1 (5).png" },
+       { "id": "7", "name": "Pauluen Masarapera", "role": "Procurement Officer", "avatar": "/assets/team/1 (7).png" },
+       { "id": "8", "name": "Admire Sithole", "role": "Workshop Manager", "avatar": "/assets/team/1 (8).png" },
+       { "id": "10", "name": "Joseph Nedahwa", "role": "Buyer", "avatar": "/assets/team/1 (10).png" },
+       { "id": "11", "name": "Isheanesu Makwara", "role": "IT Operation", "avatar": "https://api.dicebear.com/7.x/initials/svg?seed=Isheanesu+Makwara" }
+    ],
+    "faqs": [
+      { "id": "1", "question": "What regions do you cover?", "answer": "We operate primarily in Zimbabwe and neighbouring SADC countries." }
+    ]
+  }
+}

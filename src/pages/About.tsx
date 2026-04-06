@@ -51,31 +51,58 @@ export default function About() {
         </div>
       </section>
 
-      {/* Reliability at Scale (Moved from Home) */}
-      <section style={{ padding: '120px 0', background: 'var(--navy-mid)' }}>
+      {/* Reliability at Scale - REDESIGNED */}
+      <section style={{ padding: '160px 0', background: 'var(--navy-mid)', borderTop: '1px solid rgba(255,255,255,0.03)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '80px', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.2fr)', gap: '100px', alignItems: 'center' }}>
+            {/* Left Content Panel */}
             <ScrollReveal>
-              <div>
-                <div className="who-we-are-badge">One Standard. One Network.</div>
-                <h2 style={{ fontSize: 'clamp(32px, 3.5vw, 48px)', fontWeight: 700, color: 'var(--white)', marginBottom: '24px' }}>
-                  Reliability at scale
+              <div className="about-redesign-info">
+                <div className="who-we-are-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '40px' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--teal)"><path d="M12 0l3.09 8.91h9.41l-7.62 5.54 2.91 9.55-7.79-5.66-7.79 5.66 2.91-9.55-7.62-5.54h9.41z"/></svg>
+                  About Wordcroft
+                </div>
+                <h2 style={{ fontSize: 'clamp(40px, 4.5vw, 68px)', fontWeight: 800, color: 'var(--white)', lineHeight: 1.05, letterSpacing: '-0.04em', marginBottom: '32px' }}>
+                  One Standard.<br />One Network.<br />Reliability at scale.
                 </h2>
-                <p style={{ color: 'var(--gray)', fontSize: '18px', lineHeight: 1.6, marginBottom: '32px' }}>
+                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '18px', lineHeight: 1.65, maxWidth: '520px', marginBottom: '64px' }}>
                   Our logistics model combines a well-maintained fleet with advanced surveillance and dedicated operations to maintain total accountability across the supply chain.
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-                  {['Specialised Fleet', 'Dedicated Team', 'Cargo Monitoring', 'Route Planning'].map(text => (
-                    <div key={text} style={{ display: 'flex', gap: '12px', alignItems: 'center', color: 'var(--white)', fontWeight: 600 }}>
-                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--teal)' }} /> {text}
+                
+                {/* Stats Grid */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px 24px' }}>
+                  {[
+                    { val: '50+', label: 'Specialised Fleet' },
+                    { val: '15+', label: 'Dedicated Team' },
+                    { val: '24/7', label: 'Cargo Monitoring' },
+                    { val: '100%', label: 'Route Planning' }
+                  ].map(stat => (
+                    <div key={stat.label}>
+                      <div style={{ fontSize: '32px', fontWeight: 800, color: 'var(--white)', marginBottom: '8px', letterSpacing: '-0.02em' }}>{stat.val}</div>
+                      <div style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{stat.label}</div>
                     </div>
                   ))}
                 </div>
               </div>
             </ScrollReveal>
-            <div className="who-we-are-visual">
-               <img src="/assets/a (5).png" alt="Wordcroft Logistics" className="who-we-are-image" style={{ borderRadius: '24px' }} />
-            </div>
+
+            {/* Right Asymmetrical Grid */}
+            <ScrollReveal delay={0.2}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', position: 'relative' }}>
+                {/* Left Column of sub-grid */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingTop: '40px' }}>
+                  <img src="/assets/a (1).jpg" alt="Fleet 1" style={{ width: '100%', height: '240px', objectFit: 'cover', borderRadius: '12px' }} />
+                  <img src="/assets/a (11).png" alt="Fleet 2" style={{ width: '100%', height: '360px', objectFit: 'cover', borderRadius: '12px' }} />
+                  <img src="/assets/a (3).png" alt="Fleet 3" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} />
+                </div>
+                {/* Right Column of sub-grid */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <img src="/assets/a (5).png" alt="Operations 1" style={{ width: '100%', height: '400px', objectFit: 'cover', borderRadius: '12px' }} />
+                  <img src="/assets/a (2).jpg" alt="Team 1" style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '12px' }} />
+                  <img src="/assets/a (4).png" alt="Operations 2" style={{ width: '100%', height: '320px', objectFit: 'cover', borderRadius: '12px' }} />
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>

@@ -5,9 +5,14 @@ export default function Partnerships() {
   return (
     <div className="page-enter">
       {/* Hero */}
-      <section className="page-hero">
+      <section className="page-hero" style={{ paddingBottom: '40px' }}>
         <div className="page-hero-bg" />
         <div className="container">
+          <div style={{ fontSize: '14px', marginBottom: '24px', letterSpacing: '0.02em', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <a href="/" style={{ color: 'var(--gray)', textDecoration: 'none' }}>Home</a>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>/</span>
+            <span style={{ color: 'var(--teal)', fontWeight: 600 }}>Partners</span>
+          </div>
           <span className="section-tag page-hero-tag">Working Together</span>
           <h1 className="page-hero-title">Regional Partnerships</h1>
           <p className="page-hero-desc">
@@ -17,10 +22,10 @@ export default function Partnerships() {
       </section>
 
       {/* Network Story */}
-      <section style={{ padding: '120px 0' }}>
+      <section style={{ padding: '60px 0' }}>
         <div className="container">
           <ScrollReveal>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', alignItems: 'center' }}>
               <div>
                 <h2 style={{ fontSize: '32px', color: 'var(--white)', marginBottom: '24px' }}>Building a unified network</h2>
                 <p style={{ color: 'var(--gray)', fontSize: '18px', lineHeight: 1.6, marginBottom: '24px' }}>
@@ -34,7 +39,7 @@ export default function Partnerships() {
                   ))}
                 </div>
               </div>
-              <div style={{ background: 'var(--navy-mid)', padding: '60px', borderRadius: '24px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ background: 'var(--navy-mid)', padding: '40px', borderRadius: '24px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.08)' }}>
                  <h3 style={{ fontSize: '24px', color: 'var(--white)', marginBottom: '16px' }}>Interested in partnering?</h3>
                  <p style={{ color: 'var(--gray)', marginBottom: '32px' }}>We are looking for strategic partners to expand our regional cargo and energy distribution network.</p>
                  <a href="/contact" className="btn-primary">Let us partner together →</a>
@@ -44,10 +49,10 @@ export default function Partnerships() {
         </div>
       </section>
       {/* Partner Logo Dual Slider */}
-      <section style={{ padding: '80px 0', background: 'var(--navy-mid)', borderTop: '1px solid rgba(255,255,255,0.05)', overflow: 'hidden' }}>
+      <section style={{ padding: '40px 0', background: 'var(--navy-mid)', borderTop: '1px solid rgba(255,255,255,0.05)', overflow: 'hidden' }}>
         <div className="container" style={{ textAlign: 'center', marginBottom: '60px' }}>
           <ScrollReveal>
-             <h2 style={{ fontSize: 'clamp(32px, 3.5vw, 48px)', color: 'var(--white)', fontWeight: 700 }}>Our Growing Regional Network</h2>
+             <h2 style={{ fontSize: 'clamp(32px, 3.5vw, 48px)', color: 'var(--white)', fontWeight: 700 }}>OUR PARTNERS</h2>
           </ScrollReveal>
         </div>
 
@@ -59,7 +64,7 @@ export default function Partnerships() {
               '/assets/partners/01 (1).png', '/assets/partners/01 (2).png', '/assets/partners/01 (3).png', '/assets/partners/01 (4).png',
             ].map((p, i) => (
               <div key={i} className="scale-card" style={{ width: '220px', height: '110px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#ffffff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '24px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.15)', margin: '0 12px' }}>
-                <img src={p} alt={`Partner Row 1 - ${i}`} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+                <img src={encodeURI(p)} alt={`Partner Row 1 - ${i}`} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
               </div>
             ))}
           </div>
@@ -73,7 +78,7 @@ export default function Partnerships() {
               '/assets/partners/01 (5).png', '/assets/partners/01 (6).png', '/assets/partners/01 (1).jpg', '/assets/partners/01 (2).jpg',
             ].map((p, i) => (
               <div key={i} className="scale-card" style={{ width: '220px', height: '110px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#ffffff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '24px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.15)', margin: '0 12px' }}>
-                <img src={p} alt={`Partner Row 2 - ${i}`} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+                <img src={encodeURI(p)} alt={`Partner Row 2 - ${i}`} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
               </div>
             ))}
           </div>

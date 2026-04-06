@@ -1,18 +1,28 @@
 import { ScrollReveal } from '../components/ScrollReveal';
+import { useCMS } from '../CMSContext';
 import '../App.css';
 
 export default function Sustainability() {
+  const { content } = useCMS();
+  const page = content.pages.sustainability;
+
   return (
     <div className="page-enter">
       {/* Hero */}
       <section className="page-hero">
-        <div className="page-hero-bg" style={{ backgroundImage: 'url("/assets/a/sustain.png")' }} />
-        <div className="container">
-          <span className="section-tag page-hero-tag">Purpose</span>
-          <h1 className="page-hero-title">Sustainability & Impact</h1>
-          <p className="page-hero-desc">
-            We believe that moving essential resources reliably and securely is critical to the sustainability of the region's industrial backbone.
-          </p>
+        <div className="page-hero-bg" style={{ 
+          backgroundImage: 'linear-gradient(rgba(0, 50, 40, 0.45), rgba(0, 50, 40, 0.45)), url("/assets/a/sustain.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }} />
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+          <ScrollReveal>
+            <span className="section-tag page-hero-tag" style={{ color: 'var(--teal)' }}>{page.hero.tag}</span>
+            <h1 className="page-hero-title">{page.hero.title}</h1>
+            <p className="page-hero-desc" style={{ color: 'rgba(255,255,255,0.8)' }}>
+              {page.hero.desc}
+            </p>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -23,16 +33,13 @@ export default function Sustainability() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '100px', alignItems: 'center' }}>
               <div>
                 <h2 style={{ fontSize: 'clamp(32px, 3.5vw, 48px)', color: 'var(--white)', marginBottom: '32px' }}>
-                  Delivering impact across the regional logistics network
+                  {page.impact.title}
                 </h2>
                 <p style={{ color: 'var(--gray)', fontSize: '18px', lineHeight: 1.6, marginBottom: '24px' }}>
-                  Wordcroft Investments focuses on sectors that power economies. From fuel supply chains to industrial logistics, our work enables businesses, communities, and entire regions to function effectively.
+                  {page.impact.desc}
                 </p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '40px' }}>
-                  {[
-                    { label: 'Honesty', val: 'Transparent operations' },
-                    { label: 'Integrity', val: 'Principled delivery' }
-                  ].map(v => (
+                  {page.impact.values.map((v: any) => (
                     <div key={v.label}>
                       <div style={{ color: 'var(--teal)', fontWeight: 700, fontSize: '14px', textTransform: 'uppercase', marginBottom: '4px' }}>{v.label}</div>
                       <div style={{ color: 'var(--white)', fontSize: '16px' }}>{v.val}</div>
@@ -41,19 +48,17 @@ export default function Sustainability() {
                 </div>
               </div>
               <div style={{ padding: '48px', background: 'rgba(255,255,255,0.03)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <div className="who-we-are-badge" style={{ marginBottom: '24px' }}>Why Our Work Matters</div>
+                <div className="who-we-are-badge" style={{ marginBottom: '24px' }}>{page.impact.badge}</div>
                 <p style={{ color: 'var(--white)', fontSize: '20px', lineHeight: 1.6, fontWeight: 500 }}>
-                  "Reliability in logistics is not optional—it is essential. We strengthen regional networks to power the future of Zimbabwe and its neighbors."
+                  {page.impact.quote}
                 </p>
                 <div style={{ marginTop: '32px', display: 'flex', gap: '20px' }}>
-                   <div style={{ color: 'var(--white)' }}>
-                     <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--teal)' }}>20+</div>
-                     <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--gray)' }}>Years Experience</div>
-                   </div>
-                   <div style={{ color: 'var(--white)' }}>
-                     <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--teal)' }}>100%</div>
-                     <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--gray)' }}>Compliance focus</div>
-                   </div>
+                   {page.impact.stats.map((stat: any) => (
+                     <div key={stat.label} style={{ color: 'var(--white)' }}>
+                       <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--teal)' }}>{stat.val}</div>
+                       <div style={{ fontSize: '12px', textTransform: 'uppercase', color: 'var(--gray)' }}>{stat.label}</div>
+                     </div>
+                   ))}
                 </div>
               </div>
             </div>
@@ -61,6 +66,25 @@ export default function Sustainability() {
         </div>
       </section>
 
+      {/* CSR Initiatives (Consolidated) */}
+      <section style={{ padding: '100px 0', background: 'var(--navy-mid)', borderTop: '1px solid rgba(255,255,255,0.03)' }}>
+        <div className="container">
+          <ScrollReveal>
+            <div className="who-we-are-badge" style={{ marginBottom: '24px' }}>{page.csr.badge}</div>
+            <h2 style={{ fontSize: '32px', color: 'var(--white)', marginBottom: '48px' }}>{page.csr.title}</h2>
+          </ScrollReveal>
+          <div className="csr-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
+            {page.csr.items.map((v: any, i: number) => (
+              <ScrollReveal key={v.title} delay={i * 0.1}>
+                <div style={{ padding: '40px', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)', height: '100%' }}>
+                  <h3 style={{ color: 'var(--teal)', fontSize: '20px', marginBottom: '16px' }}>{v.title}</h3>
+                  <p style={{ color: 'var(--gray)', lineHeight: 1.6 }}>{v.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

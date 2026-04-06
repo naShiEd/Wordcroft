@@ -1,29 +1,35 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useCMS } from '../CMSContext';
 import './Navbar.css';
 
 const navLinks = [
   {
+    label: 'Home',
+    href: '/',
+    children: [],
+  },
+  {
     label: 'About us',
     href: '/about',
     children: [
-      { label: 'Our Story', href: '/about' },
-      { label: 'Our Team', href: '/team' },
-      { label: 'Mission & Values', href: '/mission-values' },
+      { label: 'About us', description: 'HPE Growth as a technology growth investor.', href: '/about' },
+      { label: 'Our team', description: 'Meet our team members.', href: '/team' },
+      { label: 'Mission, purpose and values', description: 'Get to know our core values.', href: '/mission-values' },
+      { label: 'Careers', description: 'Discover job opportunities with us.', href: '/careers' },
+      { label: 'News', description: 'Read the latest news about our firm and portfolio.', href: '/news' },
+      { label: 'Insights', description: 'Learn more about our market and portfolio insights.', href: '/insights' },
     ],
   },
   {
-    label: 'Partnerships',
-    href: '/partnerships',
+    label: 'Partners',
+    href: '/partners',
     children: [],
   },
   {
     label: 'Sustainability',
     href: '/sustainability',
-    children: [
-      { label: 'Sustainability', href: '/sustainability' },
-      { label: 'Corporate Social Responsibility', href: '/csr' },
-    ],
+    children: [],
   },
 ];
 
@@ -31,6 +37,8 @@ export default function Navbar() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { content } = useCMS();
+  const { global } = content;
 
   useEffect(() => {
     setOpenMenu(null);
@@ -41,7 +49,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar-inner container">
         <Link to="/" className="navbar-logo">
-          <img src="/logo.png" alt="Wordcroft Investments" style={{ height: '40px', width: 'auto' }} />
+          <img src={global.logo} alt={global.companyName} style={{ height: '40px', width: 'auto' }} />
         </Link>
 
         <nav className="navbar-links" role="navigation">
@@ -69,7 +77,12 @@ export default function Navbar() {
         <div className="nav-dropdown glass-effect">
           {item.children.map((child) => (
             <Link key={child.label} to={child.href} className="dropdown-link">
-              <span className="dropdown-label">{child.label}</span>
+              <span className="dropdown-link-inner">
+                <span className="dropdown-label">{child.label}</span>
+                {'description' in child && child.description && (
+                  <span className="dropdown-desc">{child.description}</span>
+                )}
+              </span>
             </Link>
           ))}
         </div>
@@ -81,6 +94,13 @@ export default function Navbar() {
         <div className="navbar-actions">
           <Link to="/contact" className="btn-primary nav-cta">
             Contact Us
+          </Link>
+          <Link to="/admin" style={{ color: 'var(--white)', padding: '8px', opacity: 0.8, display: 'flex' }} aria-label="Login">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+              <polyline points="10 17 15 12 10 7"/>
+              <line x1="15" y1="12" x2="3" y2="12"/>
+            </svg>
           </Link>
           <button
             className={`mobile-toggle${mobileOpen ? ' open' : ''}`}
@@ -102,7 +122,17 @@ export default function Navbar() {
             ))}
           </div>
         ))}
-        <Link to="/contact" className="btn-primary mobile-cta">Contact Us</Link>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '32px' }}>
+          <Link to="/contact" className="btn-primary mobile-cta">Contact Us</Link>
+          <Link to="/admin" className="mobile-nav-link" style={{ fontSize: '18px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+              <polyline points="10 17 15 12 10 7"/>
+              <line x1="15" y1="12" x2="3" y2="12"/>
+            </svg>
+            Login
+          </Link>
+        </div>
       </div>
     </header>
   );
