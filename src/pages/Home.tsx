@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ScrollReveal } from '../components/ScrollReveal';
 import HeroBlob from '../components/HeroBlob';
@@ -8,6 +9,15 @@ export default function Home() {
   const { content } = useCMS();
   const page = content.pages.home;
   const { services } = content.collections;
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  useEffect(() => {
+    if (!page.partners.testimonials?.length) return;
+    const timer = setInterval(() => {
+      setCurrentTestimonial((prev: number) => (prev + 1) % page.partners.testimonials.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [page.partners.testimonials?.length]);
 
   return (
     <div className="page-enter">
@@ -19,9 +29,9 @@ export default function Home() {
           <div className="container" style={{ position: 'relative', zIndex: 2 }}>
             <div className="hero-content">
               <ScrollReveal>
-                <h1 className="hero-title" style={{ fontSize: 'clamp(48px, 6vw, 92px)', fontWeight: 800, color: 'var(--white)', lineHeight: 0.95, letterSpacing: '-0.04em', maxWidth: '900px', marginBottom: '32px' }}>
+                <h1 className="hero-title" style={{ fontWeight: 800, color: 'var(--white)', letterSpacing: '-0.04em', maxWidth: '900px', marginBottom: '32px' }}>
                   {page.hero.title.split('\n').map((line: string, i: number) => (
-                    <span key={i}>{line}{i === 0 && <br />}</span>
+                    <span key={i} style={{ display: 'block' }}>{line}</span>
                   ))}
                 </h1>
                 <p className="hero-subtitle" style={{ fontSize: '20px', color: 'var(--gray)', maxWidth: '600px', margin: '0 auto 48px', lineHeight: 1.6, textAlign: 'center' }}>
@@ -50,10 +60,10 @@ export default function Home() {
 
         <div className="scale-slider-track-wrapper">
           <div className="marquee-container">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
-              <div key={`row1-${i}`} className="scale-card" style={{ width: '400px', flexShrink: 0, margin: '0 15px', borderRadius: '24px', overflow: 'hidden', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', position: 'relative' }}>
-                <div style={{ height: '300px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ color: 'var(--gray)', fontSize: '14px', fontStyle: 'italic', opacity: 0.5, letterSpacing: '1px' }}>IMAGE PENDING</span>
+            {[...page.scaleSection.images, ...page.scaleSection.images].map((img: string, i: number) => (
+              <div key={`row1-${i}`} className="scale-card marquee-card">
+                <div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <img src={img} alt={`Fleet ${i}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               </div>
             ))}
@@ -61,10 +71,10 @@ export default function Home() {
         </div>
         <div className="scale-slider-track-wrapper" style={{ marginTop: '30px' }}>
           <div className="marquee-container reverse">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
-              <div key={`row2-${i}`} className="scale-card" style={{ width: '400px', flexShrink: 0, margin: '0 15px', borderRadius: '24px', overflow: 'hidden', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', position: 'relative' }}>
-                <div style={{ height: '300px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ color: 'var(--gray)', fontSize: '14px', fontStyle: 'italic', opacity: 0.5, letterSpacing: '1px' }}>IMAGE PENDING</span>
+            {[...page.scaleSection.imagesRow2, ...page.scaleSection.imagesRow2].map((img: string, i: number) => (
+              <div key={`row2-${i}`} className="scale-card marquee-card">
+                <div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                   <img src={img} alt={`Fleet Row 2 ${i}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               </div>
             ))}
@@ -83,29 +93,37 @@ export default function Home() {
 
         <div className="scale-slider-track-wrapper" style={{ opacity: 0.8, padding: '40px 0' }}>
           <div className="marquee-container">
-            {[
-              '/assets/partners/01 (1).png', '/assets/partners/01 (2).png', '/assets/partners/01 (3).png',
-              '/assets/partners/01 (4).png', '/assets/partners/01 (5).png', '/assets/partners/01 (6).png',
-              '/assets/partners/01 (1).jpg', '/assets/partners/01 (2).jpg',
-              '/assets/partners/01 (1).png', '/assets/partners/01 (2).png', '/assets/partners/01 (3).png',
-              '/assets/partners/01 (4).png', '/assets/partners/01 (5).png', '/assets/partners/01 (6).png',
-            ].map((p, i) => (
+            {page.partners.logos.map((p: string, i: number) => (
               <div key={i} className="scale-card" style={{ width: '220px', height: '110px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#ffffff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '24px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.15)', margin: '0 12px' }}>
                 <img src={p} alt={`Partner ${i}`} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+              </div>
+            ))}
+            {/* Duplicate for seamless infinite loop */}
+            {page.partners.logos.map((p: string, i: number) => (
+              <div key={`dup-${i}`} className="scale-card" style={{ width: '220px', height: '110px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#ffffff', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '24px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.15)', margin: '0 12px' }}>
+                <img src={p} alt={`Partner Dup ${i}`} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
               </div>
             ))}
           </div>
         </div>
 
-        <div className="container" style={{ textAlign: 'center' }}>
-          <ScrollReveal delay={0.3}>
-            <div style={{ marginTop: '80px', maxWidth: '800px', margin: '80px auto 0' }}>
-               <p style={{ fontSize: '24px', color: 'var(--white)', fontStyle: 'italic', lineHeight: 1.5 }}>
-                 {page.partners.testimonial}
-               </p>
-               <div style={{ marginTop: '24px', color: 'var(--teal)', fontWeight: 700 }}>{page.partners.author}</div>
+        <div className="container" style={{ textAlign: 'center', minHeight: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {page.partners.testimonials?.map((t: any, i: number) => (
+            <div 
+              key={i} 
+              style={{ 
+                display: i === currentTestimonial ? 'block' : 'none',
+                animation: 'fadeIn 0.8s ease forwards',
+                maxWidth: '800px',
+                margin: '0 auto'
+              }}
+            >
+              <p style={{ fontSize: '24px', color: 'var(--white)', fontStyle: 'italic', lineHeight: 1.5 }}>
+                {t.quote}
+              </p>
+              <div style={{ marginTop: '24px', color: 'var(--teal)', fontWeight: 700 }}>{t.author}</div>
             </div>
-          </ScrollReveal>
+          ))}
         </div>
       </section>
 
@@ -118,17 +136,17 @@ export default function Home() {
               {page.sectors.title}
             </h2>
           </ScrollReveal>
-          <div className="what-we-do-grid">
+          <div className="what-we-do-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px', maxWidth: '100% ' }}>
             {services.map((sector: any, i: number) => (
               <ScrollReveal key={sector.title} delay={i * 0.1}>
                 <div className="wwd-card" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '24px', height: '100%', transition: 'all 0.3s ease', overflow: 'hidden' }}>
-                  <div style={{ height: '200px', overflow: 'hidden' }}>
+                  <div style={{ height: '280px', overflow: 'hidden' }}>
                     <img src={sector.img} alt={sector.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8, transition: 'transform 0.5s ease' }} />
                   </div>
                   <div style={{ padding: '32px' }}>
                     <div style={{ height: '2px', width: '32px', background: 'var(--teal)', marginBottom: '20px' }} />
                     <h3 style={{ fontSize: '20px', color: 'var(--white)', marginBottom: '12px' }}>{sector.title}</h3>
-                    <p style={{ color: 'var(--gray)', fontSize: '15px', lineHeight: 1.6 }}>{sector.desc}</p>
+                    <p style={{ color: 'var(--gray)', fontSize: '15px', lineHeight: 1.7, textAlign: 'justify', opacity: 0.9 }}>{sector.desc}</p>
                   </div>
                 </div>
               </ScrollReveal>

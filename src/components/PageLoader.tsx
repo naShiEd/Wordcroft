@@ -13,7 +13,7 @@ export default function PageLoader() {
 
   return (
     <div className={`page-loader ${!loading ? 'fade-out' : ''}`}>
-      <img src="/logo.png" alt="Wordcroft Investments Loader" className="loader-logo" />
+      <img src="/logo.png" alt="Wordcroft Loader" className="loader-logo" />
     </div>
   );
 }

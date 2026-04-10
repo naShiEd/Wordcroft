@@ -24,7 +24,7 @@
 }
 .footer-cols {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
 }
 .footer-heading {
@@ -40,7 +40,8 @@
   flex-direction: column;
   gap: 10px;
 }
-.footer-col a {
+.footer-col a,
+.footer-compliance-list li {
   font-size: 14px;
   color: var(--gray);
   transition: color 0.2s;
@@ -72,5 +73,6 @@
 
 @media (max-width: 768px) {
   .footer-inner { grid-template-columns: 1fr; }
-  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-cols { grid-template-columns: 1fr; gap: 40px; }
+  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
 }

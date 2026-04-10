@@ -1,11 +1,20 @@
 .navbar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 10000; /* Higher than other elements */
   padding: 32px 0;
-  transition: all 0.4s ease;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.navbar.scrolled {
+  padding: 16px 0;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.navbar.mobile-nav-open {
+  background: #00120b;
 }
 
 .navbar-inner {
@@ -66,10 +75,8 @@
   top: 100%;
   left: 0;
   width: 420px;
-  background: var(--deep-navy);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+  background: #00120b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 16px;
   margin-top: 10px;
@@ -167,15 +174,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 45, 28, 0.98);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  padding: 120px 32px 64px;
+  background: #00120b;
+  padding: 100px 24px 64px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   overflow-y: auto;
-  z-index: 9991;
+  z-index: 9999;
   transform: translateX(100%);
   transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
   visibility: hidden;
@@ -187,9 +192,7 @@
 .mobile-nav-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  padding-bottom: 16px;
 }
 .mobile-nav-group:last-of-type {
   border-bottom: none;
@@ -220,8 +223,24 @@
   font-size: 16px;
 }
 
+/* Navbar Light (for Team pages) */
+.navbar-light .nav-link {
+  color: var(--teal);
+}
+.navbar-light .nav-link:hover,
+.navbar-light .nav-link.active {
+  background: rgba(0, 200, 120, 0.08);
+}
+.navbar-light .mobile-toggle span {
+  background: var(--teal);
+}
+
 @media (max-width: 960px) {
+  .navbar { padding: 16px 0; }
   .navbar-links { display: none; }
   .mobile-toggle { display: flex; z-index: 10001; }
   .mobile-menu { display: flex; }
+  .navbar-actions .nav-cta { display: none; }
+  
+  .navbar-logo img { height: 32px !important; }
 }

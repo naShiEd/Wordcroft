@@ -11,7 +11,7 @@ export default function Sustainability() {
       {/* Hero */}
       <section className="page-hero">
         <div className="page-hero-bg" style={{ 
-          backgroundImage: 'linear-gradient(rgba(0, 50, 40, 0.45), rgba(0, 50, 40, 0.45)), url("/assets/a/sustain.png")',
+          backgroundImage: `linear-gradient(rgba(0, 50, 40, 0.45), rgba(0, 50, 40, 0.45)), url("${page.hero.bg || '/assets/a/sustain.png'}")`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }} />
@@ -30,7 +30,7 @@ export default function Sustainability() {
       <section style={{ padding: '120px 0' }}>
         <div className="container">
           <ScrollReveal>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '100px', alignItems: 'center' }}>
+            <div className="who-we-are-inner" style={{ alignItems: 'center', gap: '60px' }}>
               <div>
                 <h2 style={{ fontSize: 'clamp(32px, 3.5vw, 48px)', color: 'var(--white)', marginBottom: '32px' }}>
                   {page.impact.title}
@@ -38,7 +38,7 @@ export default function Sustainability() {
                 <p style={{ color: 'var(--gray)', fontSize: '18px', lineHeight: 1.6, marginBottom: '24px' }}>
                   {page.impact.desc}
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '40px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '24px', marginTop: '40px' }}>
                   {page.impact.values.map((v: any) => (
                     <div key={v.label}>
                       <div style={{ color: 'var(--teal)', fontWeight: 700, fontSize: '14px', textTransform: 'uppercase', marginBottom: '4px' }}>{v.label}</div>
@@ -66,14 +66,46 @@ export default function Sustainability() {
         </div>
       </section>
 
-      {/* CSR Initiatives (Consolidated) */}
-      <section style={{ padding: '100px 0', background: 'var(--navy-mid)', borderTop: '1px solid rgba(255,255,255,0.03)' }}>
-        <div className="container">
+      {/* Impact Showcase Marquee */}
+      <section className="scale-slider-section" style={{ padding: '80px 0', position: 'relative', background: 'var(--navy-mid)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div className="container" style={{ marginBottom: '60px' }}>
           <ScrollReveal>
-            <div className="who-we-are-badge" style={{ marginBottom: '24px' }}>{page.csr.badge}</div>
-            <h2 style={{ fontSize: '32px', color: 'var(--white)', marginBottom: '48px' }}>{page.csr.title}</h2>
+            <div className="who-we-are-badge">{page.csr.badge}</div>
+            <h2 style={{ fontSize: 'clamp(28px, 3vw, 42px)', fontWeight: 700, color: 'var(--white)' }}>
+              {page.csr.title}
+            </h2>
           </ScrollReveal>
-          <div className="csr-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
+        </div>
+
+        <div className="scale-slider-track-wrapper">
+          <div className="marquee-container">
+            {page.csr.impactImages.slice(0, Math.ceil(page.csr.impactImages.length / 2)).map((img: string, i: number) => (
+              <div key={`row1-${i}`} className="scale-card marquee-card">
+                <div style={{ height: '300px', overflow: 'hidden' }}>
+                    <img src={img} alt={`CSR Impact Row 1 ${i}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="scale-slider-track-wrapper" style={{ marginTop: '30px' }}>
+          <div className="marquee-container reverse">
+            {page.csr.impactImages.slice(Math.ceil(page.csr.impactImages.length / 2)).map((img: string, i: number) => (
+              <div key={`row2-${i}`} className="scale-card marquee-card">
+                <div style={{ height: '300px', overflow: 'hidden' }}>
+                    <img src={img} alt={`CSR Impact Row 2 ${i}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* CSR Initiatives (Consolidated) */}
+      <section style={{ padding: '0 0 100px', background: 'var(--navy-mid)', borderTop: '1px solid rgba(255,255,255,0.03)' }}>
+        <div className="container">
+          <div className="csr-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px' }}>
             {page.csr.items.map((v: any, i: number) => (
               <ScrollReveal key={v.title} delay={i * 0.1}>
                 <div style={{ padding: '40px', background: 'rgba(255,255,255,0.02)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)', height: '100%' }}>

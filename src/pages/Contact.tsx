@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ScrollReveal } from '../components/ScrollReveal';
+import { useCMS } from '../CMSContext';
 import '../App.css';
 
 export default function Contact() {
@@ -10,24 +11,26 @@ export default function Contact() {
     message: '',
   });
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    alert('Thank you for contacting Wordcroft Investments. We will get back to you soon.');
+    setIsSubmitted(true);
   };
 
-  const office = {
-    city: 'Mutare',
-    address: 'No. 7785 Longbridge Road, Nyakamete',
-    postal: 'P.O Box 559 Mutare, Zimbabwe',
-    phone: '+263 (0) ...',
-    email: 'info@wordcroft.co.zw'
-  };
+  const { content } = useCMS();
+  const office = content.global.contact;
+  const social = content.global.social;
 
   return (
     <div className="page-enter">
       <section className="page-hero">
-        <div className="page-hero-bg" style={{ backgroundImage: 'url("/assets/a/services.png")' }} />
+        <div className="page-hero-bg" style={{ 
+          backgroundImage: 'linear-gradient(rgba(0,15,10,0.65), rgba(0,15,10,0.65)), url("/assets/a/services.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }} />
         <div className="container">
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px', alignItems: 'flex-start' }}>
             <div style={{ flex: '1 1 200px' }}>
@@ -55,7 +58,7 @@ export default function Contact() {
               </p>
 
               <div className="office-card" style={{ background: 'var(--navy-mid)', padding: '32px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <div className="office-city" style={{ color: 'var(--teal)', fontWeight: 700, fontSize: '18px', marginBottom: '8px' }}>{office.city}</div>
+                <div className="office-city" style={{ color: 'var(--teal)', fontWeight: 700, fontSize: '18px', marginBottom: '8px' }}>{office.city} HQ</div>
                 <div className="office-address" style={{ color: 'var(--white)', lineHeight: 1.6, marginBottom: '16px' }}>
                   {office.address}<br />
                   {office.postal}
@@ -66,87 +69,97 @@ export default function Contact() {
               </div>
 
               <div className="social-links" style={{ marginTop: '40px', display: 'flex', gap: '24px', alignItems: 'center' }}>
-                <a href="https://www.facebook.com/wordcroft" target="_blank" rel="noopener noreferrer" className="custom-social-link" style={{ color: 'var(--white)', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', transition: 'all 0.3s ease' }}>
-                  <svg style={{ width: '20px', height: '20px', fill: 'currentColor' }} viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
-                </a>
-                <a href="https://www.instagram.com/wordcroft" target="_blank" rel="noopener noreferrer" className="custom-social-link" style={{ color: 'var(--white)', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', transition: 'all 0.3s ease' }}>
-                  <svg style={{ width: '22px', height: '22px', fill: 'currentColor' }} viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
-                </a>
-                <a href="https://www.tiktok.com/@wordcroft_investments" target="_blank" rel="noopener noreferrer" className="custom-social-link" style={{ color: 'var(--white)', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', transition: 'all 0.3s ease' }}>
-                  <svg style={{ width: '20px', height: '20px', fill: 'currentColor' }} viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25v178.72A162.55 162.55 0 1 1 185 188.31v89.89a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17h0A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"/></svg>
-                </a>
-                <style>
-                  {`
-                    .custom-social-link:hover {
-                      background: var(--teal) !important;
-                      color: var(--navy) !important;
-                      transform: translateY(-4px);
-                    }
-                  `}
-                </style>
+                {social.facebook && social.facebook !== '#' && (
+                  <a href={social.facebook} target="_blank" rel="noopener noreferrer" className="custom-social-link" style={{ color: 'var(--white)', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', transition: 'all 0.3s ease' }}>
+                    <svg style={{ width: '20px', height: '20px', fill: 'currentColor' }} viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+                  </a>
+                )}
+                {social.linkedin && social.linkedin !== '#' && (
+                  <a href={social.linkedin} target="_blank" rel="noopener noreferrer" className="custom-social-link" style={{ color: 'var(--white)', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', transition: 'all 0.3s ease' }}>
+                    <svg style={{ width: '20px', height: '20px', fill: 'currentColor' }} viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+                  </a>
+                )}
+                {social.twitter && social.twitter !== '#' && (
+                  <a href={social.twitter} target="_blank" rel="noopener noreferrer" className="custom-social-link" style={{ color: 'var(--white)', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', transition: 'all 0.3s ease' }}>
+                    <svg style={{ width: '20px', height: '20px', fill: 'currentColor' }} viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+                  </a>
+                )}
               </div>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
             <div>
-            <form className="contact-form glass-effect" onSubmit={handleSubmit} style={{ padding: '48px', borderRadius: '24px' }}>
-              <div className="form-group" style={{ marginBottom: '24px' }}>
-                <label htmlFor="name" style={{ display: 'block', color: 'var(--white)', marginBottom: '8px', fontSize: '14px' }}>Full Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  placeholder="Your name"
-                  required
-                  style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--white)' }}
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                />
-              </div>
-              <div className="form-group" style={{ marginBottom: '24px' }}>
-                <label htmlFor="email" style={{ display: 'block', color: 'var(--white)', marginBottom: '8px', fontSize: '14px' }}>Email Address</label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="your.email@example.com"
-                  required
-                  style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--white)' }}
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                />
-              </div>
-              <div className="form-group" style={{ marginBottom: '24px' }}>
-                <label htmlFor="subject" style={{ display: 'block', color: 'var(--white)', marginBottom: '8px', fontSize: '14px' }}>Subject</label>
-                <select
-                  id="subject"
-                  style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--white)' }}
-                  value={formData.subject}
-                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                >
-                  <option>General Inquiry</option>
-                  <option>Logistics & Transport</option>
-                  <option>Fuel & Dry Goods</option>
-                  <option>Partnerships</option>
-                </select>
-              </div>
-              <div className="form-group" style={{ marginBottom: '32px' }}>
-                <label htmlFor="message" style={{ display: 'block', color: 'var(--white)', marginBottom: '8px', fontSize: '14px' }}>Message</label>
-                <textarea
-                  id="message"
-                  rows={5}
-                  placeholder="How can we help you?"
-                  required
-                  style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--white)', resize: 'vertical' }}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                ></textarea>
-              </div>
-              <button type="submit" className="btn-primary" style={{ width: '100%', padding: '16px', borderRadius: '8px', fontWeight: 700 }}>Send Message →</button>
-            </form>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  </div>
-);
+              {isSubmitted ? (
+                <div className="glass-effect" style={{ padding: '60px 48px', borderRadius: '24px', textAlign: 'center', border: '1px solid var(--teal)' }}>
+                   <div style={{ width: '80px', height: '80px', background: 'rgba(0,194,255,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 32px' }}>
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                   </div>
+                   <h2 style={{ fontSize: '32px', color: 'var(--white)', marginBottom: '16px' }}>Message Received</h2>
+                   <p style={{ color: 'var(--gray)', fontSize: '18px', lineHeight: 1.6, marginBottom: '32px' }}>
+                     Thank you for reaching out. A Wordcroft regional representative will review your inquiry and contact you shortly.
+                   </p>
+                   <button onClick={() => setIsSubmitted(false)} className="btn-primary" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'var(--white)' }}>Send another message</button>
+                </div>
+              ) : (
+                <form className="contact-form glass-effect" onSubmit={handleSubmit} style={{ padding: '48px', borderRadius: '24px' }}>
+                  <div className="form-group" style={{ marginBottom: '24px' }}>
+                    <label htmlFor="name" style={{ display: 'block', color: 'var(--white)', marginBottom: '8px', fontSize: '14px' }}>Full Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      placeholder="Your name"
+                      required
+                      style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--white)' }}
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group" style={{ marginBottom: '24px' }}>
+                    <label htmlFor="email" style={{ display: 'block', color: 'var(--white)', marginBottom: '8px', fontSize: '14px' }}>Email Address</label>
+                    <input
+                      type="email"
+                      id="email"
+                      placeholder="your.email@example.com"
+                      required
+                      style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--white)' }}
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group" style={{ marginBottom: '24px' }}>
+                    <label htmlFor="subject" style={{ display: 'block', color: 'var(--white)', marginBottom: '8px', fontSize: '14px' }}>Subject</label>
+                    <select
+                      id="subject"
+                      style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--white)' }}
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    >
+                      <option>General Inquiry</option>
+                      <option>Logistics & Transport</option>
+                      <option>Fuel & Dry Goods</option>
+                      <option>Partnerships</option>
+                    </select>
+                  </div>
+                  <div className="form-group" style={{ marginBottom: '32px' }}>
+                    <label htmlFor="message" style={{ display: 'block', color: 'var(--white)', marginBottom: '8px', fontSize: '14px' }}>Message</label>
+                    <textarea
+                      id="message"
+                      rows={5}
+                      placeholder="How can we help you?"
+                      required
+                      style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: 'var(--white)', resize: 'vertical' }}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    ></textarea>
+                  </div>
+                  <button type="submit" className="btn-primary" style={{ width: '100%', padding: '16px', borderRadius: '8px', fontWeight: 700 }}>Send Message →</button>
+                </form>
+              )}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+    </div>
+  );
 }

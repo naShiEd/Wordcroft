@@ -11,6 +11,8 @@ export interface CMSContent {
       phone: string;
       whatsapp: string;
       address: string;
+      city: string;
+      postal: string;
     };
     social: {
       facebook: string;
@@ -25,12 +27,15 @@ export interface CMSContent {
       defaultTitle: string;
       defaultDesc: string;
     };
+    compliance: Array<{ name: string; logo: string }>;
   };
   pages: Record<string, any>;
   collections: {
     services: any[];
     team: any[];
     faqs: any[];
+    news: any[];
+    insights: any[];
   };
 }
 
@@ -47,30 +52,62 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // In a real app, this would fetch from an API
-    // We're loading it from the JSON file which is already imported
-    // We'll simulate a small delay to mimic fetching
-    const timer = setTimeout(() => {
+    const loadCMS = async () => {
+      try {
+        const response = await fetch(`/cms-content.json?v=${Date.now()}`);
+        if (response.ok) {
+          const data = await response.json();
+          setContent(data);
+          setIsLoading(false);
+          return;
+        }
+      } catch (err) {
+        console.warn("Could not fetch live cms-content.json, trying local storage or defaults", err);
+      }
+
       const savedContent = localStorage.getItem('cms_content');
       if (savedContent) {
         try {
           setContent(JSON.parse(savedContent));
+          setIsLoading(false);
+          return;
         } catch (e) {
           console.error("Failed to parse saved content", e);
         }
       }
       setIsLoading(false);
-    }, 500);
+    };
 
-    return () => clearTimeout(timer);
+    loadCMS();
   }, []);
 
-  const updateContent = (newContent: CMSContent) => {
+  const updateContent = async (newContent: CMSContent) => {
+    // Update local state immediately for UI responsiveness
     setContent(newContent);
-    localStorage.setItem('cms_content', JSON.stringify(newContent));
+    try {
+      localStorage.setItem('cms_content', JSON.stringify(newContent));
+    } catch (e) {
+      console.warn("LocalStorage quota exceeded, local persistence skipped.", e);
+    }
     
-    // In a production environment, we'd make an API call here to save to a database or file system
-    console.log("Content updated successfully", newContent);
+    // Attempt global persistence to the JSON file
+    const response = await fetch('/php-backend/save.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newContent)
+    });
+
+    if (!response.ok) {
+      throw new Error("Server-side save failed");
+    }
+    
+    const result = await response.json();
+    if (result.error) {
+      throw new Error(result.error);
+    }
+
+    console.log("Global persistence successful");
+    return true;
   };
 
   return (

@@ -13,12 +13,12 @@ const navLinks = [
     label: 'About us',
     href: '/about',
     children: [
-      { label: 'About us', description: 'HPE Growth as a technology growth investor.', href: '/about' },
-      { label: 'Our team', description: 'Meet our team members.', href: '/team' },
-      { label: 'Mission, purpose and values', description: 'Get to know our core values.', href: '/mission-values' },
-      { label: 'Careers', description: 'Discover job opportunities with us.', href: '/careers' },
-      { label: 'News', description: 'Read the latest news about our firm and portfolio.', href: '/news' },
-      { label: 'Insights', description: 'Learn more about our market and portfolio insights.', href: '/insights' },
+      { label: 'About us', description: 'Wordcroft as a leading logistics and transportation partner.', href: '/about' },
+      { label: 'Our team', description: 'Meet our key leadership and operational team.', href: '/team' },
+      { label: 'Mission, purpose and values', description: 'Our core commitment to logistics excellence.', href: '/mission-values' },
+      { label: 'Careers', description: 'Join our growing logistics network.', href: '/careers' },
+      { label: 'News', description: 'The latest updates on our regional operations.', href: '/news' },
+      { label: 'Insights', description: 'In-depth views on regional trade and logistics.', href: '/insights' },
     ],
   },
   {
@@ -36,17 +36,29 @@ const navLinks = [
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeMobileGroup, setActiveMobileGroup] = useState<string | null>(null);
   const location = useLocation();
   const { content } = useCMS();
   const { global } = content;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     setOpenMenu(null);
     setMobileOpen(false);
   }, [location]);
 
+  const isLightPage = location.pathname.startsWith('/team');
+
   return (
-    <header className="navbar">
+    <header className={`navbar ${isLightPage ? 'navbar-light' : ''} ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'mobile-nav-open' : ''}`}>
       <div className="navbar-inner container">
         <Link to="/" className="navbar-logo">
           <img src={global.logo} alt={global.companyName} style={{ height: '40px', width: 'auto' }} />
@@ -74,7 +86,7 @@ export default function Navbar() {
 
       {/* Dropdown Desktop */}
       {item.children.length > 0 && openMenu === item.label && (
-        <div className="nav-dropdown glass-effect">
+        <div className="nav-dropdown">
           {item.children.map((child) => (
             <Link key={child.label} to={child.href} className="dropdown-link">
               <span className="dropdown-link-inner">
@@ -95,7 +107,7 @@ export default function Navbar() {
           <Link to="/contact" className="btn-primary nav-cta">
             Contact Us
           </Link>
-          <Link to="/admin" style={{ color: 'var(--white)', padding: '8px', opacity: 0.8, display: 'flex' }} aria-label="Login">
+          <Link to="/admin" style={{ color: 'rgba(255,255,255,0.02)', padding: '8px', display: 'flex' }} aria-label="Admin Access">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
               <polyline points="10 17 15 12 10 7"/>
@@ -116,15 +128,58 @@ export default function Navbar() {
       <div className={`mobile-menu${mobileOpen ? ' open' : ''}`}>
         {navLinks.map((item) => (
           <div key={item.label} className="mobile-nav-group">
-            <Link to={item.href} className="mobile-nav-link">{item.label}</Link>
-            {item.children.map((child) => (
-              <Link key={child.href} to={child.href} className="mobile-nav-child">{child.label}</Link>
-            ))}
+            <div 
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+              onClick={() => {
+                if (item.children.length > 0) {
+                  setActiveMobileGroup(activeMobileGroup === item.label ? null : item.label);
+                }
+              }}
+            >
+              <Link to={item.href} className="mobile-nav-link" onClick={(e) => {
+                if (item.children.length > 0) e.preventDefault();
+              }}>
+                {item.label}
+              </Link>
+              {item.children.length > 0 && (
+                <svg 
+                  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" 
+                  style={{ 
+                    transition: 'transform 0.4s ease', 
+                    transform: activeMobileGroup === item.label ? 'rotate(180deg)' : 'rotate(0deg)',
+                    color: 'rgba(255,255,255,0.4)'
+                  }}
+                >
+                  <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              )}
+            </div>
+
+            {item.children.length > 0 && (
+              <div style={{ 
+                maxHeight: activeMobileGroup === item.label ? '500px' : '0',
+                overflow: 'hidden',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                opacity: activeMobileGroup === item.label ? 1 : 0,
+                paddingLeft: '12px'
+              }}>
+                {item.children.map((child) => (
+                  <Link 
+                    key={child.href} 
+                    to={child.href} 
+                    className="mobile-nav-child"
+                    onClick={() => { setMobileOpen(false); setActiveMobileGroup(null); }}
+                  >
+                    {child.label}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         ))}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '32px' }}>
           <Link to="/contact" className="btn-primary mobile-cta">Contact Us</Link>
-          <Link to="/admin" className="mobile-nav-link" style={{ fontSize: '18px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Link to="/admin" className="mobile-nav-link" style={{ fontSize: '18px', display: 'flex', alignItems: 'center', gap: '8px', color: 'rgba(255,255,255,0.02)' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
               <polyline points="10 17 15 12 10 7"/>
